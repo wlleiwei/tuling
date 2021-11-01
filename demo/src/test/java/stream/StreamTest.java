@@ -104,4 +104,87 @@ public class StreamTest {
                 .map(Person::getName);
         System.out.println("员工工资最高的人：" + name.get());
     }
+
+    @Test
+    public void test7() {
+        //计算Integer集合中大于6的元素的个数
+        List<Integer> list = Arrays.asList(7, 6, 4, 8, 2, 11, 9);
+        long count = list.stream().filter(x -> x > 6).count();
+        System.out.println("集合中大于6的元素个数：" + count);
+    }
+
+    @Test
+    public void test8() {
+        //改成大写
+        String[] strArr = {"abcd", "bcdd", "defde", "fTr"};
+        List<String> collect = Arrays.stream(strArr)
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
+        System.out.println("大写：" + collect);
+        //数组元素加3
+        List<Integer> intList = Arrays.asList(1, 3, 5, 7, 9, 11);
+        List<Integer> collect1 = intList.stream().map(x -> x + 3).collect(Collectors.toList());
+        System.out.println("元素加3：" + collect1);
+    }
+
+    @Test
+    //map用来对stream中的元素进行映射操作
+    public void test9() {
+        //员工工资加10000
+        List<Person> persons = personList;
+        //不改变原来的stream
+        List<Person> collect1 = persons.stream()
+                .map(person -> {
+                    Person newPerson = new Person(person.getName(),
+                            person.getSalary() + 10000,
+                            person.getAge(),
+                            person.getSex(),
+                            person.getArea());
+                    return newPerson;
+                }).collect(Collectors.toList());
+        System.out.println(persons.get(0));
+        System.out.println(collect1.get(0));
+        //改变原来的stream
+        List<Person> collect = persons.stream()
+                .map(person -> {
+                    person.setSalary(person.getSalary() + 20000);
+                    return person;
+                })
+                .collect(Collectors.toList());
+        System.out.println(persons.get(0));
+        System.out.println(collect.get(0));
+    }
+
+    @Test
+    public void test10() {
+        //将两个字符数组合并成一个新的字符数组
+        List<String> list = Arrays.asList("m,k,l,a", "1,3,5,7");
+        List<String> collect = list.stream()
+                .flatMap(item -> {
+                    String[] strings = item.split(",");
+                    return Arrays.stream(strings);
+                })
+                .collect(Collectors.toList());
+        System.out.println(list);
+        System.out.println(collect);
+    }
+
+    @Test
+    public void test11() {
+        String[] strings = {"abb", "abcd", "fegc", "efe", "adfes"};
+        OptionalInt max = Arrays.stream(strings)
+                .filter(x -> startWithA(x))
+                .mapToInt(x -> map(x)).max();
+        System.out.println(max);
+    }
+
+    private boolean startWithA(String s) {
+        System.out.println("startWithA " + s);
+        return s.startsWith("a");
+    }
+
+    private int map(String a) {
+        System.out.println(a + " " + a.length());
+        return a.length();
+    }
 }

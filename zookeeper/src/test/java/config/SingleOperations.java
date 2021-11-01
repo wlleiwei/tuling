@@ -15,7 +15,7 @@ public class SingleOperations extends Base {
     @Test
     public void testCreate() {
         ZooKeeper zooKeeper = getZooKeeper();
-        MyConfig myConfig = MyConfig.builder().key("key").value("value").build();
+        MyConfig myConfig = MyConfig.builder().key("key").name("name").build();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             val bytes = objectMapper.writeValueAsBytes(myConfig);
@@ -70,7 +70,7 @@ public class SingleOperations extends Base {
     public void testSet() {
         ZooKeeper zooKeeper = getZooKeeper();
         try {
-            MyConfig myConfig = MyConfig.builder().key("key1").value("value1").build();
+            MyConfig myConfig = MyConfig.builder().key("key").name("name").build();
             byte[] bytes = objectMapper.writeValueAsBytes(myConfig);
             Stat stat = new Stat();
             zooKeeper.getData(nodePath, false, stat);

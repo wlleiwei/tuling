@@ -11,6 +11,8 @@
     <modules>
         <module>zookeeper</module>
         <module>optimization</module>
+        <module>concurrent</module>
+        <module>spring</module>
     </modules>
 
 

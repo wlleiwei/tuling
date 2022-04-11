@@ -16,8 +16,8 @@ public enum ScopeEnum {
 
     String value;
 
-    ScopeEnum(String scope) {
-
+    ScopeEnum(String value) {
+        this.value = value;
     }
 
     public String getValue() {

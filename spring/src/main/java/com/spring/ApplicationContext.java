@@ -59,7 +59,7 @@ public class ApplicationContext {
         List<Class> classList = new ArrayList<>();
         ClassLoader loader = ApplicationContext.class.getClassLoader();
         //需要将com.test转化成com/test
-        packagePath = packagePath.replace(".", "/");
+        packagePath = packagePath.replace(".", File.separator);
         //通过类加载器来获取packagePath的绝对路径
         URL resource = loader.getResource(packagePath);
         String targetPath = resource.getPath();
@@ -208,7 +208,7 @@ public class ApplicationContext {
                     System.out.println(fileName);
                     if (fileName.endsWith(".class")) {
                         fileName = fileName.substring(fileName.indexOf("com"), fileName.indexOf(".class"));
-                        fileName = fileName.replace("\\", ".");
+                        fileName = fileName.replace(File.separator, ".");
                         try {
                             Class<?> loadClass = loader.loadClass(fileName);
                             list.add(loadClass);
@@ -230,10 +230,11 @@ public class ApplicationContext {
      * @return
      */
     private String getDefaultBeanName(Class c) {
-        String className = c.getName();
+        String className = c.getSimpleName();
         char[] chars = className.toCharArray();
-        char first = chars[0];
-        chars[0] = (char) (first + 32);
+        if (chars[0] >= 65 && chars[0] <= 90) {
+            chars[0] = (char) (chars[0] + 32);
+        }
         return new String(chars);
     }
 

@@ -15,6 +15,11 @@ public class Test {
         ApplicationContext context = new ApplicationContext(AppConfig.class);
         //2.从spring容器中获取对应的bean对象
         UserService userService = (UserService) context.getBean("userService");
+        UserService userService1 = (UserService) context.getBean("userService");
+        UserService userService2 = (UserService) context.getBean("userService");
+        System.out.println(userService);
+        System.out.println(userService1);
+        System.out.println(userService2);
         userService.test();
     }
 }
